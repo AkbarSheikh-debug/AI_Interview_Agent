@@ -1,0 +1,83 @@
+# ── Environment & secrets ─────────────────────────────────────────────
+.env
+.env.local
+.env.*.local
+secrets.md
+*.pem
+*.key
+
+# ── Python ────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# ── Node / frontend ───────────────────────────────────────────────────
+node_modules/
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+frontend/build/
+*.tsbuildinfo
+
+# ── Build / bundler output ────────────────────────────────────────────
+dist/
+build/
+.cache/
+
+# ── Test / debug artifacts ────────────────────────────────────────────
+e2e-tests/screenshots/
+e2e-tests/node_modules/
+e2e-tests/*.log
+test_screenshots/
+.playwright-mcp/
+playwright-report/
+test-results/
+
+# Loose ad-hoc test scripts at repo root
+/e2e_*.py
+/tts_test.*
+/voice_test_*.wav
+/voice_test_*.mp3
+
+# ── User resume / sample uploads ──────────────────────────────────────
+/akkbaar-cv.pdf
+*.pdf
+
+# ── Scratch / experiments (not part of the app) ───────────────────────
+scratch/
+
+# ── Planning / internal docs (only README.md should be committed) ─────
+ANTICHEAT_AND_UI_PLAN.md
+FEATURE_ROADMAP.md
+FREE_API_ABLATION_STUDY.md
+HACKATHON_MASTER_PROMPT.md
+PROJECT_CONTEXT.md
+ROADMAP.md
+Interview_Agent_Module_Report.html
+frontend/README.md
+
+# ── IDE / editor ──────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+.claude/
+
+# ── OS cruft ──────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── Logs ──────────────────────────────────────────────────────────────
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

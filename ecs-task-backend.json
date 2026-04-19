@@ -1,0 +1,52 @@
+{
+  "family": "interview-agent-backend",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "1024",
+  "memory": "2048",
+  "executionRoleArn": "arn:aws:iam::YOUR_ACCOUNT_ID:role/ecsTaskExecutionRole",
+  "taskRoleArn": "arn:aws:iam::YOUR_ACCOUNT_ID:role/ecsTaskExecutionRole",
+  "containerDefinitions": [
+    {
+      "name": "backend-container",
+      "image": "YOUR_ACCOUNT_ID.dkr.ecr.REGION.amazonaws.com/interview-agent-backend:latest",
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 8000,
+          "hostPort": 8000,
+          "protocol": "tcp"
+        }
+      ],
+      "environment": [
+        { "name": "ENVIRONMENT", "value": "production" }
+      ],
+      "secrets": [
+        {
+          "name": "OPENAI_API_KEY",
+          "valueFrom": "arn:aws:ssm:REGION:YOUR_ACCOUNT_ID:parameter/interview-agent/OPENAI_API_KEY"
+        },
+        {
+          "name": "GROQ_API_KEY",
+          "valueFrom": "arn:aws:ssm:REGION:YOUR_ACCOUNT_ID:parameter/interview-agent/GROQ_API_KEY"
+        },
+        {
+          "name": "SUPABASE_URL",
+          "valueFrom": "arn:aws:ssm:REGION:YOUR_ACCOUNT_ID:parameter/interview-agent/SUPABASE_URL"
+        },
+        {
+          "name": "SUPABASE_KEY",
+          "valueFrom": "arn:aws:ssm:REGION:YOUR_ACCOUNT_ID:parameter/interview-agent/SUPABASE_KEY"
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/interview-agent-backend",
+          "awslogs-region": "us-east-1",
+          "awslogs-stream-prefix": "ecs"
+        }
+      }
+    }
+  ]
+}
