@@ -235,4 +235,10 @@ docker build -t interview-agent-frontend ./frontend
 
 ## License
 
-MIT.
+Licensed under the **GNU Affero General Public License v3.0** (AGPL-3.0).
+See [LICENSE](LICENSE) for the full text.
+
+Under AGPL-3.0, if you modify this software and run it as a network service
+(e.g. host it for others to use over the web), you must make your modified
+source code available to those users. See
+<https://www.gnu.org/licenses/agpl-3.0.html> for details.
