@@ -235,4 +235,4 @@ docker build -t interview-agent-frontend ./frontend
 
 ## License
 
-MIT.
+GNU Affero General Public License v3.0
