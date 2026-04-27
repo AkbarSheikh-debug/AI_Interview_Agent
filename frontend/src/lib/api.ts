@@ -2,7 +2,10 @@ import axios from 'axios'
 import type { FacialStats } from '../components/FaceAnalyzer'
 import type { AntiCheatStats } from './antiCheat'
 
-const api = axios.create({ baseURL: '/api' })
+const api = axios.create({
+  baseURL: '/api',
+  headers: { 'ngrok-skip-browser-warning': 'true' },
+})
 
 export const uploadResume = (file: File) => {
   const form = new FormData()
@@ -35,12 +38,16 @@ export const startInterview = (
   resume: object,
   llmModel?: string,
   sttModel?: string,
+  companyId?: string,
+  companyName?: string,
 ) =>
   api.post('/interview/start', {
     session_id: sessionId,
     resume,
     llm_model: llmModel,
     stt_model: sttModel,
+    company_id: companyId || undefined,
+    company_name: companyName || undefined,
   })
 
 export const sendMessage = (sessionId: string, message: string) =>
@@ -56,18 +63,30 @@ export const transcribeAudio = (blob: Blob, duration: number, ext: string = 'web
   return api.post('/voice/transcribe', form)
 }
 
+// Called ONCE at the end of the interview — triggers LLM evaluation and caches the result.
 export const generateReport = (
   sessionId: string,
   facialScore?: number,
   integrityScore?: number,
   integrityFlag?: boolean,
+  companyId?: string,
+  companyName?: string,
+  candidateEmail?: string,
 ) => {
   const params: Record<string, unknown> = {}
   if (facialScore !== undefined) params.facial_score = facialScore
   if (integrityScore !== undefined) params.integrity_score = integrityScore
   if (integrityFlag !== undefined) params.integrity_flag = integrityFlag
+  if (companyId) params.company_id = companyId
+  if (companyName) params.company_name = companyName
+  if (candidateEmail) params.candidate_email = candidateEmail
   return api.get(`/report/generate/${sessionId}`, { params })
 }
+
+// Called on every Report page load — returns the already-generated cached report.
+// Never re-runs the LLM, so scores are always stable.
+export const fetchReport = (sessionId: string) =>
+  api.get(`/report/fetch/${sessionId}`)
 
 export const speakText = async (text: string): Promise<string> => {
   const resp = await api.post('/voice/speak', { text }, { responseType: 'blob' })

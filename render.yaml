@@ -1,0 +1,37 @@
+services:
+  - type: web
+    name: interview-agent
+    env: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    envVars:
+      # ── Frontend build args (baked into the JS bundle) ──────────────────
+      - key: VITE_SUPABASE_URL
+        value: https://xajoupqxntivheowlpdf.supabase.co
+      - key: VITE_SUPABASE_ANON_KEY
+        value: sb_publishable_n6dJJO58GEaNYZrIWe2WwA_8xOEhAZr
+
+      # ── Backend runtime secrets (fill in Render dashboard) ──────────────
+      - key: GROQ_API_KEY
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: OPENROUTER_API_KEY
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: ELEVENLABS_API_KEY
+        sync: false
+      - key: ELEVENLABS_VOICE_ID
+        value: 245byKg3uV4vDjJ8fSV8
+
+      # ── Supabase backend keys ────────────────────────────────────────────
+      - key: SUPABASE_URL
+        value: https://xajoupqxntivheowlpdf.supabase.co
+      - key: SUPABASE_KEY
+        sync: false
+      - key: SUPABASE_SERVICE_KEY
+        sync: false
+
+      - key: DEMO_MODE
+        value: false
